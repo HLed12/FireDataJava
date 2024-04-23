@@ -88,10 +88,10 @@ public class CheckFire extends JFrame {
                                 double fireY = Double.parseDouble(values[6].trim());
                                 LocalDate fireDate = LocalDate.parse(values[3].trim().split(" ")[0], formatter);
                                 System.out.println(fireDate);  // harry test
-                                System.out.println(fireDate.isBefore(inputDate));
+                                System.out.println(fireDate.isBefore(inputDate)); // harry test
                                 String fireIdentifier = values[9].trim();
                                 String fireName = values[4].trim();
-                                String fireDateStr = values[3].trim();
+                                String fireDateStr = values[3].trim(); // harry adjust
                                 calculateDistance t = new calculateDistance(latValue, longValue, fireY, fireX);
                                 double distance = t.getDistance();
                                 if (distance < FIRE_RADIUS_KM && fireDate.isBefore(inputDate) == true) {
@@ -99,14 +99,14 @@ public class CheckFire extends JFrame {
                                     closestDistance = distance; // harry adjust
                                     closestFireId = fireIdentifier;
                                     closestFireName = fireName;
-                                    closestDate = fireDateStr;
+                                    closestDate = fireDateStr; // harry adjust
                                     break;
                                 } // harry adjust: deleted ' && distance < closestDistance ' from if below
                                 if (fireDate.isBefore(inputDate) == true && distance < SAFE_DISTANCE_KM && distance < closestDistance) {
                                     closestDistance = distance;
                                     closestFireId = fireIdentifier;
                                     closestFireName = fireName;
-                                    closestDate = fireDateStr;
+                                    closestDate = fireDateStr; // harry adjust
                                     isSafe = false;
                                     break; // harry adjustment
                                 }
@@ -127,7 +127,9 @@ public class CheckFire extends JFrame {
                     } else {
                         System.out.printf("You are dangerously close to %s - %s - %s, which is only %.2f km away.\n", closestFireName, closestDate, closestFireId, closestDistance);
                         final ImageIcon fireImg = new ImageIcon("fire_image2.jpg");
-                        JOptionPane.showMessageDialog(null, "You are dangerously close to fire",
+                        JOptionPane.showMessageDialog(null, "You are dangerously close to " +
+                                        "the fire.\nThe fire known as " + closestFireName + " which is only " +
+                                        String.format("%.2f", (closestDistance)) + " km away.\nFire ID: " + closestFireId,
                                 "Smokey the Bear's Warning", JOptionPane.INFORMATION_MESSAGE, fireImg);
                     }
 
