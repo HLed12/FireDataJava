@@ -26,4 +26,18 @@ public class calculateDistance {
         double distance = R * c;
         return distance;
     }
+
+    public String getTime() {
+        double dist = getDistance();
+        double hours = (dist / 22.97); //kmh for average forest fire spread
+        // source: https://wfca.com/wildfire-articles/how-fast-do-wildfires-spread/#:~:text=Wildfires%20spread%20at%20an%20average%20of%2014.27%20miles,such%20as%20weather%20conditions%2C%20fuel%20type%2C%20and%20terrain.
+        int mins =  (int) Math.floor(hours * 60);
+        if (mins / 60 >= 1) {
+            int hoursT = (int) Math.floor(mins / 60);
+            int minsT = (mins % 60) * 60;
+            return "According to average fire spread data, you have approximately " + hoursT + " hour(s) and " +
+                    minsT + " minutes.";
+        }
+        return "According to average fire spread data, you have approximately " + mins + " minutes.";
+    }
 }
