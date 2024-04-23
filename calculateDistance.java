@@ -34,7 +34,7 @@ public class calculateDistance {
         int mins =  (int) Math.floor(hours * 60);
         if (mins / 60 >= 1) {
             int hoursT = (int) Math.floor(mins / 60);
-            int minsT = (mins % 60) * 60;
+            int minsT = (mins % 60);
             return "According to average fire spread data, you have approximately " + hoursT + " hour(s) and " +
                     minsT + " minutes.";
         }

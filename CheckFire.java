@@ -16,7 +16,7 @@ public class CheckFire extends JFrame {
 
     // This handles the called JLabels, Buttons, and Checkboxes and orients them on the window
     public CheckFire() {
-        setTitle("Death by Fire (or Bear)");
+        setTitle("US Forest Fire Database");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JButton locateButton = new JButton("Locate");
@@ -74,6 +74,7 @@ public class CheckFire extends JFrame {
                     String closestFireId = "";
                     String closestFireName = "";
                     String closestDate = "";
+                    String estimatedTime = "";
                     double closestDistance = Double.MAX_VALUE;
                     if (scanner.hasNextLine()) {
                         scanner.nextLine();
@@ -94,12 +95,14 @@ public class CheckFire extends JFrame {
                                 String fireDateStr = values[3].trim(); // harry adjust
                                 calculateDistance t = new calculateDistance(latValue, longValue, fireY, fireX);
                                 double distance = t.getDistance();
+                                String time = t.getTime();
                                 if (distance < FIRE_RADIUS_KM && fireDate.isBefore(inputDate) == true) {
                                     isSafe = false;
                                     closestDistance = distance; // harry adjust
                                     closestFireId = fireIdentifier;
                                     closestFireName = fireName;
                                     closestDate = fireDateStr; // harry adjust
+                                    estimatedTime = time;
                                     break;
                                 } // harry adjust: deleted ' && distance < closestDistance ' from if below
                                 if (fireDate.isBefore(inputDate) == true && distance < SAFE_DISTANCE_KM && distance < closestDistance) {
@@ -107,6 +110,7 @@ public class CheckFire extends JFrame {
                                     closestFireId = fireIdentifier;
                                     closestFireName = fireName;
                                     closestDate = fireDateStr; // harry adjust
+                                    estimatedTime = time;
                                     isSafe = false;
                                     break; // harry adjustment
                                 }
@@ -129,7 +133,8 @@ public class CheckFire extends JFrame {
                         final ImageIcon fireImg = new ImageIcon("fire_image2.jpg");
                         JOptionPane.showMessageDialog(null, "You are dangerously close to " +
                                         "the fire.\nThe fire known as " + closestFireName + " which is only " +
-                                        String.format("%.2f", (closestDistance)) + " km away.\nFire ID: " + closestFireId,
+                                        String.format("%.2f", (closestDistance)) + " km away.\n" + estimatedTime +
+                                        "\nFire ID: " + closestFireId,
                                 "Smokey the Bear's Warning", JOptionPane.INFORMATION_MESSAGE, fireImg);
                     }
 
@@ -149,10 +154,9 @@ public class CheckFire extends JFrame {
                     throw new RuntimeException(ex);
                 } catch(DateTimeParseException ex) {
                     final ImageIcon dateImg = new ImageIcon("date_example.png");
-                    JOptionPane.showMessageDialog(null, "Hey! Let's try reading the " +
-                                    "instructions!  \nGo ahead... try putting the date in the proper format :)" +
-                                    "\np.s. dates that do not exist won't work either",
-                            "Lacking Reading Comprehension Skills", JOptionPane.INFORMATION_MESSAGE, dateImg);
+                    JOptionPane.showMessageDialog(null, "Follow the date format (yyyy-MM-dd).\n" +
+                                    "Dates that do not exist won't work either",
+                            "Reading Comprehension Skills", JOptionPane.INFORMATION_MESSAGE, dateImg);
                     // resets the improper entry
                     dateField.setText("");
 
@@ -203,6 +207,8 @@ public class CheckFire extends JFrame {
 // Future adjustments:
 // Adaptions - allow users to enter the other types of coordinates and have the code manually calculate // rearrange
 //                the coordinates into the simple decimal system. i.e., Degrees/Minutes/Seconds -> decimals
+//           - if the data is out there, gather information on the wood type//forest type, average winds, precipitation,
+//             etc. and have each impact the time // speed of the fire (instead of just using an average)
 
 
 // Issues:
