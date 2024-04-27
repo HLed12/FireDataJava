@@ -11,7 +11,14 @@ import javax.swing.*;
 /////////////////////////////////////////////////////////////////////////////////////////
 
 
+// Other possibilites:
 
+// have a GUI showing fire history within a 100km radius the user inputted
+
+// Find the forest types to get more accurate fire spread speeds
+
+// Make a simulation, using forest types, precipitation, wind, sun/clouds, temperature..
+// allowing the user to adjust accordingly and produce their own wild fire
 
 
 
